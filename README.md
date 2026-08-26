@@ -4,7 +4,7 @@ A full-stack AI-powered web application that analyzes user text, detects sentime
 
 ## 🚀 Live Demo
 
-**Frontend:** [Open Live Application](YOUR-VERCEL-URL)
+**Frontend:** [Open Live Application](https://ai-sentiment-insight-analyzer-6w27bjgh9.vercel.app/)
 
 **Backend API:** [Render Backend](https://ai-sentiment-insight-analyzer.onrender.com)
 
