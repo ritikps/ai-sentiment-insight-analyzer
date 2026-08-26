@@ -59,15 +59,18 @@ app.post('/api/analyze', async (req, res) => {
 Analyze the following text.
 
 Return ONLY valid JSON in this exact format:
+
 {
   "sentiment": "Positive",
   "summary": "Short 2-sentence summary"
 }
 
 The sentiment must be exactly one of:
+
 Positive, Neutral, Negative.
 
 Text:
+
 ${text}
 `;
 
@@ -86,7 +89,7 @@ ${text}
             .replace(/\s*```$/i, '')
             .trim();
 
-        // Convert AI JSON string into JavaScript object
+        // Convert AI response to JavaScript object
         const parsed = JSON.parse(cleanJson);
 
         // Save result to PostgreSQL database
@@ -135,6 +138,24 @@ app.get('/api/history', async (req, res) => {
 
         res.status(500).json({
             error: 'Failed to fetch history'
+        });
+    }
+});
+
+// DELETE route: Clear all saved analysis history
+app.delete('/api/history', async (req, res) => {
+    try {
+        await pool.query('DELETE FROM insights');
+
+        res.json({
+            message: 'History cleared successfully'
+        });
+
+    } catch (error) {
+        console.error('Clear History Error:', error);
+
+        res.status(500).json({
+            error: 'Failed to clear history'
         });
     }
 });

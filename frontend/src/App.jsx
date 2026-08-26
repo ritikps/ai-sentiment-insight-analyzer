@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+
 import './App.css';
 
 function App() {
@@ -74,8 +75,32 @@ function App() {
     }
   };
 
+  // Clear all saved analysis history
+  const handleClearHistory = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/history`, {
+        method: 'DELETE',
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to clear history');
+      }
+
+      // Clear history from the screen
+      setHistory([]);
+
+      // Clear latest insight from the screen
+      setAnalysis(null);
+    } catch (err) {
+      console.error('Failed to clear history:', err);
+    }
+  };
+
   return (
     <div className="dashboard-container">
+
       {/* Header */}
       <header className="header">
         <h1>AI Insights Dashboard</h1>
@@ -113,6 +138,7 @@ function App() {
 
           {analysis ? (
             <div className="results-view">
+
               <p>
                 <strong>Sentiment:</strong>{' '}
                 {analysis.sentiment}
@@ -145,6 +171,7 @@ function App() {
                   Processed: {analysis.timestamp}
                 </small>
               )}
+
             </div>
           ) : (
             <p className="placeholder-text">
@@ -159,10 +186,38 @@ function App() {
         className="card"
         style={{ marginTop: '20px' }}
       >
-        <h3>Saved History Log (PostgreSQL)</h3>
+
+        {/* History Header + Small Clear Button */}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <h3 style={{ margin: 0 }}>
+            Saved History Log (PostgreSQL)
+          </h3>
+
+          {history.length > 0 && (
+            <button
+              onClick={handleClearHistory}
+              type="button"
+              style={{
+                padding: '5px 10px',
+                fontSize: '12px',
+                width: 'auto',
+                margin: 0,
+              }}
+            >
+              Clear History
+            </button>
+          )}
+        </div>
 
         {history.length > 0 ? (
           <div style={{ overflowX: 'auto' }}>
+
             <table
               style={{
                 width: '100%',
@@ -171,6 +226,7 @@ function App() {
                 borderCollapse: 'collapse',
               }}
             >
+
               <thead>
                 <tr>
                   <th>ID</th>
@@ -183,7 +239,10 @@ function App() {
               <tbody>
                 {history.map((row) => (
                   <tr key={row.id}>
-                    <td>#{row.id}</td>
+
+                    <td>
+                      #{row.id}
+                    </td>
 
                     <td>
                       {row.sentiment}
@@ -200,14 +259,17 @@ function App() {
                           ).toLocaleTimeString()
                         : '-'}
                     </td>
+
                   </tr>
                 ))}
               </tbody>
+
             </table>
           </div>
         ) : (
           <p>No records saved yet.</p>
         )}
+
       </section>
     </div>
   );
