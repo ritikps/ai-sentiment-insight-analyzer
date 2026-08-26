@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Dashboard - Phase 1</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #0f172a; color: white; padding: 40px; }
+    .card { background: #1e293b; padding: 24px; border-radius: 8px; max-width: 500px; }
+    textarea { width: 100%; height: 80px; margin-top: 10px; border-radius: 4px; padding: 8px; }
+    button { background: #3b82f6; color: white; border: none; padding: 10px 16px; margin-top: 10px; border-radius: 4px; cursor: pointer; }
+    button:hover { background: #2563eb; }
+    #result { margin-top: 15px; background: #334155; padding: 10px; border-radius: 4px; display: none; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>AI Text Insights</h2>
+    <label for="userInput">Enter text to analyze:</label>
+    <textarea id="userInput" placeholder="Paste user feedback here..."></textarea>
+    <button onclick="analyzeText()">Analyze with AI</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function analyzeText() {
+      const text = document.getElementById('userInput').value;
+      const resultDiv = document.getElementById('result');
+      
+      if (!text) {
+        alert("Please enter some text!");
+        return;
+      }
+      
+      // Simulating immediate JS execution
+      resultDiv.style.display = "block";
+      resultDiv.innerHTML = "<strong>Processing:</strong> Parsing text length (" + text.length + " characters)...";
+    }
+  </script>
+</body>
+</html>
