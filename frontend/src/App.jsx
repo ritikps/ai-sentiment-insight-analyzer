@@ -7,10 +7,17 @@ function App() {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  // Deployed backend URL
+  const API_URL = 'https://ai-sentiment-insight-analyzer.onrender.com';
+
   // Fetch saved analysis history from PostgreSQL
   const fetchHistory = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/history');
+      const res = await fetch(`${API_URL}/api/history`);
+
+      if (!res.ok) {
+        throw new Error(`History request failed: ${res.status}`);
+      }
 
       const data = await res.json();
 
@@ -34,7 +41,7 @@ function App() {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/analyze', {
+      const response = await fetch(`${API_URL}/api/analyze`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -46,15 +53,22 @@ function App() {
 
       const data = await response.json();
 
+      if (!response.ok) {
+        throw new Error(data.error || 'Analysis failed');
+      }
+
+      // Show latest AI result
       setAnalysis(data);
 
       // Refresh history after saving new analysis
-      fetchHistory();
-
-      // Optional: clear input after successful analysis
-      // setInputText('');
+      await fetchHistory();
     } catch (err) {
       console.error('Failed to analyze:', err);
+
+      setAnalysis({
+        sentiment: 'Error',
+        summary: 'Failed to analyze the text. Please try again.',
+      });
     } finally {
       setLoading(false);
     }
@@ -62,7 +76,6 @@ function App() {
 
   return (
     <div className="dashboard-container">
-
       {/* Header */}
       <header className="header">
         <h1>AI Insights Dashboard</h1>
@@ -100,7 +113,6 @@ function App() {
 
           {analysis ? (
             <div className="results-view">
-
               <p>
                 <strong>Sentiment:</strong>{' '}
                 {analysis.sentiment}
@@ -133,7 +145,6 @@ function App() {
                   Processed: {analysis.timestamp}
                 </small>
               )}
-
             </div>
           ) : (
             <p className="placeholder-text">
@@ -198,7 +209,6 @@ function App() {
           <p>No records saved yet.</p>
         )}
       </section>
-
     </div>
   );
 }
