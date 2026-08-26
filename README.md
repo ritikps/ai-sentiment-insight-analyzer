@@ -1,92 +1,133 @@
-# AI Sentiment Insight Analyzer
+# AI Insights Dashboard 🚀
 
-A full-stack AI-powered web application that analyzes user text, detects sentiment, generates a concise summary, and stores analysis history in PostgreSQL.
+A full-stack AI analytics platform built with **React.js, Node.js, Express.js, PostgreSQL, and Google Gemini AI**.
+
+The application provides AI-powered text analysis, sentiment classification, summarization, and persistent PostgreSQL history tracking through a decoupled cloud deployment architecture.
 
 ## 🚀 Live Demo
 
 **Frontend:** [Open Live Application](https://ai-sentiment-insight-analyzer-6w27bjgh9.vercel.app/)
 
-**Backend API:** [Render Backend](https://ai-sentiment-insight-analyzer.onrender.com)
+**Backend API:** [Open Render Backend](https://ai-sentiment-insight-analyzer.onrender.com)
 
-## 📌 Overview
+**GitHub:** [View Source Code](https://github.com/ritikcodes405/ai-sentiment-insight-analyzer)
 
-AI Sentiment Insight Analyzer is a full-stack application built to demonstrate modern frontend, backend, database, AI, Docker, and cloud deployment skills.
+---
 
-Users can enter feedback, reviews, or any text and receive an AI-generated sentiment and summary. Each analysis is automatically stored in PostgreSQL and displayed in a history table.
+## 📸 Application Preview
 
-The application also includes a **Clear History** feature that removes all saved analysis records.
+![AI Insights Dashboard](assets/demo.png)
 
-## ✨ Features
+---
 
-* AI-powered sentiment analysis
-* Positive, Neutral, and Negative sentiment detection
-* Automatic 2-sentence summary generation
-* PostgreSQL history storage
-* View latest AI insight
-* Saved analysis history table
-* Clear entire history with one click
-* Responsive React frontend
-* REST API using Node.js and Express
-* Dockerized backend and frontend
-* Cloud deployment using Vercel and Render
-* Environment-based configuration for API keys and database credentials
+## 🌟 Key Features
+
+* 🧠 **AI-Powered Text Analysis** — Analyzes user-provided text using Google Gemini AI.
+* 📊 **Sentiment Classification** — Classifies text as **Positive, Neutral, or Negative**.
+* 📝 **Automatic Summarization** — Generates a concise summary of the submitted text.
+* ⚡ **Interactive React Dashboard** — Real-time analysis results with a simple and responsive interface.
+* 🗄️ **PostgreSQL Persistence** — Saves analysis history in PostgreSQL.
+* 📋 **History Tracking** — Displays the latest saved analysis records.
+* 🗑️ **Clear History** — Deletes saved history and resets the database identity sequence.
+* 🐳 **Dockerized Application** — Frontend and backend can run together using Docker Compose.
+* ☁️ **Cloud Deployment** — Frontend and backend are deployed independently.
+
+---
 
 ## 🏗️ Architecture
 
 ```text
-                    User
-                     |
-                     v
-             React + Vite
-                Vercel
-                     |
-                     | HTTPS API
-                     v
-          Node.js + Express
-                Render
-               /       \
-              /         \
-             v           v
-      PostgreSQL      Gemini API
-       Supabase          AI
+                         USER
+                           |
+                           v
+                 React + Vite Frontend
+                        Vercel
+                           |
+                           | HTTPS API Requests
+                           v
+                  Node.js + Express API
+                         Render
+                      /          \
+                     /            \
+                    v              v
+          PostgreSQL Database     Gemini AI
+              Supabase
 ```
+
+---
 
 ## 🛠️ Tech Stack
 
-### Frontend
+| Layer                | Technology                         | Platform           |
+| -------------------- | ---------------------------------- | ------------------ |
+| **Frontend**         | React.js, Vite, JavaScript, CSS3   | **Vercel**         |
+| **Backend API**      | Node.js, Express.js, CORS          | **Render**         |
+| **Database**         | PostgreSQL, `pg`                   | **Supabase**       |
+| **AI Integration**   | Google Gemini API, `@google/genai` | Server-side        |
+| **Containerization** | Docker, Docker Compose             | Local / Deployment |
+| **Version Control**  | Git, GitHub                        | GitHub             |
 
-* React.js
-* Vite
-* JavaScript
-* HTML5
-* CSS3
+---
 
-### Backend
+## 📁 Repository Structure
 
-* Node.js
-* Express.js
-* REST API
-* CORS
+```text
+ai-sentiment-insight-analyzer/
+│
+├── assets/
+│   └── demo.png
+│
+├── backend/
+│   ├── Dockerfile
+│   ├── package.json
+│   ├── package-lock.json
+│   └── server.js
+│
+├── frontend/
+│   ├── src/
+│   │   ├── api/
+│   │   ├── assets/
+│   │   ├── App.jsx
+│   │   ├── App.css
+│   │   └── main.jsx
+│   ├── public/
+│   ├── package.json
+│   ├── package-lock.json
+│   └── vite.config.js
+│
+├── docker-compose.yml
+├── index.html
+├── .gitignore
+└── README.md
+```
 
-### Database
+---
 
-* PostgreSQL
-* Supabase
+## 🔄 Application Flow
 
-### AI
+```text
+User enters text
+       ↓
+React frontend sends API request
+       ↓
+Node.js + Express backend
+       ↓
+Google Gemini analyzes the text
+       ↓
+Sentiment + summary generated
+       ↓
+Result saved to PostgreSQL
+       ↓
+Response returned to React
+       ↓
+Latest Insight displayed
+       ↓
+History table refreshed
+```
 
-* Google Gemini API
+---
 
-### DevOps / Deployment
-
-* Docker
-* Docker Compose
-* Git
-* GitHub
-* Vercel
-* Render
-
-## 🔌 API Endpoints
+## 📡 API Endpoints
 
 ### Analyze Text
 
@@ -94,13 +135,13 @@ The application also includes a **Clear History** feature that removes all saved
 POST /api/analyze
 ```
 
-Analyzes the submitted text using Gemini AI and saves the result to PostgreSQL.
+Analyzes the submitted text using Gemini AI and stores the result in PostgreSQL.
 
 Example request:
 
 ```json
 {
-  "text": "I really enjoyed this product. The quality was excellent."
+  "text": "I really enjoyed this product. The quality is excellent."
 }
 ```
 
@@ -118,56 +159,39 @@ Returns the latest saved analysis records.
 DELETE /api/history
 ```
 
-Deletes all saved analysis records and resets the database identity sequence.
+Deletes all saved history records and resets the PostgreSQL identity sequence.
 
-## 📂 Project Structure
+---
 
-```text
-ai-sentiment-insight-analyzer/
-│
-├── backend/
-│   ├── Dockerfile
-│   ├── package.json
-│   ├── package-lock.json
-│   └── server.js
-│
-├── frontend/
-│   ├── Dockerfile
-│   ├── package.json
-│   ├── package-lock.json
-│   └── src/
-│       ├── api/
-│       ├── App.jsx
-│       ├── App.css
-│       └── main.jsx
-│
-├── docker-compose.yml
-├── index.html
-├── .gitignore
-└── README.md
-```
+## ☁️ Deployment
 
-## 🐳 Run Locally with Docker
+### Frontend — Vercel
 
-Clone the repository:
+The React/Vite frontend is deployed on Vercel.
 
-```bash
-git clone https://github.com/ritikcodes405/ai-sentiment-insight-analyzer.git
-```
+**Live URL:**
+https://ai-sentiment-insight-analyzer-6w27bjgh9.vercel.app/
 
-Move into the project:
+### Backend — Render
 
-```bash
-cd ai-sentiment-insight-analyzer
-```
+The Node.js/Express REST API is deployed on Render.
 
-Create your environment file inside the backend directory:
+**Backend URL:**
+https://ai-sentiment-insight-analyzer.onrender.com
 
-```text
-backend/.env
-```
+### Database — Supabase
 
-Add:
+The application uses managed **PostgreSQL on Supabase** for persistent storage.
+
+### AI — Google Gemini
+
+The backend communicates with the Google Gemini API for sentiment analysis and summarization.
+
+---
+
+## 🔐 Environment Variables
+
+The backend uses environment variables for sensitive configuration:
 
 ```env
 GEMINI_API_KEY=your_gemini_api_key
@@ -175,16 +199,18 @@ DATABASE_URL=your_postgresql_connection_string
 PORT=5000
 ```
 
-Start both frontend and backend:
+Sensitive credentials are excluded from the repository using `.gitignore`.
+
+---
+
+## 🐳 Docker
+
+The project includes Docker support for running the frontend and backend together.
+
+Start the application:
 
 ```bash
 docker compose up -d
-```
-
-Open:
-
-```text
-http://localhost
 ```
 
 Stop the application:
@@ -193,78 +219,40 @@ Stop the application:
 docker compose down
 ```
 
-## 🔐 Environment Variables
-
-The application requires:
-
-```env
-GEMINI_API_KEY=
-DATABASE_URL=
-PORT=5000
-```
-
-Sensitive environment variables are intentionally excluded from GitHub using `.gitignore`.
-
-## 🧠 How It Works
+The local application is available at:
 
 ```text
-User enters text
-       ↓
-React frontend sends POST request
-       ↓
-Node.js / Express backend
-       ↓
-Gemini analyzes sentiment + summary
-       ↓
-Result saved in PostgreSQL
-       ↓
-Backend returns saved result
-       ↓
-React displays latest insight
-       ↓
-History table refreshes automatically
+Frontend: http://localhost
+Backend:  http://localhost:5000
 ```
 
-## 🎯 Example
+---
 
-### Input
+## ✅ Project Highlights
 
-```text
-I am very happy with this application. It is fast, simple to use, and gives useful AI insights.
-```
+* Full-stack React + Node.js application
+* REST API development with Express.js
+* Google Gemini AI integration
+* PostgreSQL database integration
+* Docker and Docker Compose
+* Cloud deployment with Vercel and Render
+* Persistent analysis history
+* CRUD-style API interaction
+* Production environment configuration
+* Git/GitHub version control
 
-### Output
+---
 
-```text
-Sentiment: Positive
-
-Summary:
-The user is very satisfied with the application.
-They appreciate its speed, simplicity, and useful AI insights.
-```
-
-## 📈 Future Improvements
-
-* User authentication
-* Analytics dashboard
-* Sentiment charts and statistics
-* Pagination for large history records
-* Automated CI/CD with Jenkins
-* Kubernetes deployment
-* Advanced ML model integration
-* Role-based access control
-* Export analysis history as CSV
-
-## 👨‍💻 Author
+## 👤 Author
 
 **Ritik Panda**
 
-GitHub: [ritikcodes405](https://github.com/ritikcodes405)
+* **GitHub:** [ritikcodes405](https://github.com/ritikcodes405)
+* **Project Repository:** [AI Sentiment Insight Analyzer](https://github.com/ritikcodes405/ai-sentiment-insight-analyzer)
 
-Repository: [ai-sentiment-insight-analyzer](https://github.com/ritikcodes405/ai-sentiment-insight-analyzer)
+---
 
-## ⭐ Project Highlights
+## ⭐ Project
 
-**React + Node.js + PostgreSQL + Gemini AI + Docker + Cloud Deployment**
-
-Built as a practical full-stack AI application demonstrating frontend development, REST APIs, database integration, AI integration, containerization, and deployment.
+**AI Insights Dashboard**
+**React.js + Node.js + PostgreSQL + Gemini AI + Docker + Vercel + Render**
