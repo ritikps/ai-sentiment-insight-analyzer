@@ -145,7 +145,7 @@ app.get('/api/history', async (req, res) => {
 // DELETE route: Clear all saved analysis history
 app.delete('/api/history', async (req, res) => {
     try {
-        await pool.query('DELETE FROM insights');
+        await pool.query('TRUNCATE TABLE insights RESTART IDENTITY');
 
         res.json({
             message: 'History cleared successfully'
